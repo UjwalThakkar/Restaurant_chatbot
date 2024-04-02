@@ -1,0 +1,9 @@
+numpy
+nltk
+tensorflow
+tflearn
+flask
+pymongo
+nltk
+
+

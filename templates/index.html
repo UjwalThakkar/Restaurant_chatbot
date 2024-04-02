@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <title>Restaurant Chatbot</title>
+  <head>
+    <link rel="icon" href="" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      body {
+        font-family: monospace;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+      h2 {
+        background-color: white;
+        border: 2px solid black;
+        border-radius: 5px;
+        color: #03989E;
+        display: inline-block;Helvetica
+        margin: 5px;
+        padding: 5px;
+      }
+      h4{
+      position: center;
+      }
+      #chatbox {
+        margin-top: 10px;
+        margin-bottom: 60px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        height: 40%
+        position:fixed;
+
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: 'Helvetica';
+        font-size: 17px;
+      }
+      .userText {
+        width:fit-content; width:-webkit-fit-content; width:-moz-fit-content;
+        color: white;
+        background-color: #FF9351;
+        font-family: 'Helvetica';
+        font-size: 12px;
+        margin-left: auto;
+        margin-right: 0;
+        line-height: 20px;
+        border-radius: 5px;
+        text-align: left;
+        padding: 0 5px;
+      }
+      .userText span {
+        padding:10px;
+        border-radius: 5px;
+      }
+
+      .userText ul{
+        list-style:none;
+      }
+      .botText {
+        margin-left: 0;
+        margin-right: auto;
+        width:fit-content; width:-webkit-fit-content; width:-moz-fit-content;
+        color: white;
+        background-color: #00C2CB;
+        font-family: 'Helvetica';
+        font-size: 12px;
+        line-height: 20px;
+        text-align: left;
+        border-radius: 5px;
+        padding: 0 5px;
+        list-style: none;
+      }
+      .botText span {
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        border-radius: 5px;
+      }
+      input[type=text] {
+        bottom: 0;
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        position: fixed;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body background="{{ url_for('static', filename='images/slider.jpg') }}">
+    <img />
+    <center>
+      <h2>Welcome to Our Restaurant</h2>
+      <h4>You are chatting with our customer support bot!</h4>
+    </center>
+    <div class="boxed">
+      <div>
+        <div id="chatbox"></div>
+      </div>
+      <div id="userInput">
+        <input
+          id="nameInput"
+          type="text"
+          name="msg"
+          placeholder="Ask me anything..."
+        />
+      </div>
+      <script>
+        function createMessageElement(text) {
+          const message = document.createElement("div");
+          message.classList.add("botText");
+
+          const name = document.createElement("p");
+          name.textContent = "Restrobot: ";
+          name.style.fontWeight = "bold";
+
+          message.appendChild(name);
+
+          return message;
+        }
+
+        function createListElement(item) {
+          const listItem = document.createElement("li");
+          if ("price" in item) {
+            listItem.textContent = `${item.item} : ₹${item.price}`;
+          } else {
+            if ("total_amount" in item) {
+              listItem.textContent = `Total Amount: ₹${item.total_amount}`;
+            } else {
+              listItem.textContent = `${item.item} x ${item.quantity} : ₹${item.total_cost}`;
+            }
+          }
+          return listItem;
+        }
+
+        function displayMenu(data) {
+          const menu = createMessageElement();
+          const menuList = document.createElement("ul");
+          menuList.classList.add("botText");
+          data.forEach((items) => {
+            const listItem = createListElement(items);
+            menuList.appendChild(listItem);
+          });
+          menu.appendChild(menuList);
+          $("#chatbox").append(menu);
+        }
+
+        function displayNormalResponse(data) {
+          const response = createMessageElement();
+          const text = document.createElement("p");
+          text.textContent = data;
+          response.appendChild(text);
+          $("#chatbox").append(response);
+        }
+
+        function getBotResponse() {
+          var rawText = $("#nameInput").val();
+          var userHtml =
+            '<p class="userText"><b>' + "You : " + "</b>" + rawText + "</p>";
+          $("#nameInput").val("");
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          $.get("/get", { msg: rawText }).done(function (data) {
+            if (Array.isArray(data)) {
+              displayMenu(data);
+            } else {
+              displayNormalResponse(data);
+            }
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        $("#nameInput").keypress(function (e) {
+          if (e.which == 13) {
+            getBotResponse();
+          }
+        });
+      </script>
+    </div>
+  </body>
+</html>

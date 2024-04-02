@@ -1,0 +1,88 @@
+body {
+        font-family: monospace;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+      h2 {
+        border: 1px solid black;
+        border-radius: 5px;
+        color: #ce9e62;
+        display: inline-block;Helvetica
+        margin: 5px;
+        padding: 5px;
+      }
+      h4{
+      position: center;
+      }
+      #chatbox {
+        margin-top: 10px;
+        margin-bottom: 60px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        height: 40%
+        position:fixed;
+
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: 'Helvetica';
+        font-size: 17px;
+      }
+      .userText {
+        width:fit-content; width:-webkit-fit-content; width:-moz-fit-content;
+        color: white;
+        background-color: #38B6FF;
+        font-family: 'Helvetica';
+        font-size: 12px;
+        margin-left: auto;
+        margin-right: 0;
+        line-height: 20px;
+        border-radius: 5px;
+        text-align: left;
+      }
+      .userText span {
+        padding:10px;
+        border-radius: 5px;
+      }
+      .botText {
+        margin-left: 0;
+        margin-right: auto;
+        width:fit-content; width:-webkit-fit-content; width:-moz-fit-content;
+        color: white;
+        background-color: #FFAE7D;
+        font-family: 'Helvetica';
+        font-size: 12px;
+        line-height: 20px;
+        text-align: left;
+        border-radius: 5px;
+      }
+      .botText span {
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        border-radius: 5px;
+      }
+      input[type=text] {
+        bottom: 0;
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        position: fixed;
+        border-radius: 5px;
+      }
